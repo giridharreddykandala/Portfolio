@@ -89,9 +89,67 @@
     /* ─── Hero ───────────────────────────────────────────────────── */
     #hero {
       position: relative; min-height: 100vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; text-align: center;
+      display: flex; align-items: center; justify-content: center;
       overflow: hidden; padding: 0 2rem;
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr auto;
+      align-items: center; gap: 5rem;
+      max-width: 1100px; width: 100%;
+      padding: 100px 0 80px;
+    }
+    .hero-content { display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
+    .hero-photo-col {
+      display: flex; align-items: center; justify-content: center;
+      animation: fadeUp .9s .2s cubic-bezier(.16,1,.3,1) both;
+    }
+    .hero-photo-wrap {
+      position: relative; width: 340px; height: 420px;
+    }
+    .hero-photo-glow {
+      position: absolute; inset: -30px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(41,151,255,.35) 0%, transparent 65%);
+      animation: photoGlow 4s ease-in-out infinite alternate;
+      filter: blur(20px);
+    }
+    @keyframes photoGlow {
+      from { opacity: .5; transform: scale(.95); }
+      to   { opacity: 1;  transform: scale(1.05); }
+    }
+    .hero-photo-ring {
+      position: absolute; inset: -4px; border-radius: 32px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2), transparent, var(--accent));
+      background-size: 300% 300%;
+      animation: ringRotate 4s linear infinite;
+      padding: 2px;
+    }
+    @keyframes ringRotate {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    .hero-photo {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      border-radius: 28px;
+      display: block;
+      position: relative; z-index: 1;
+      filter: grayscale(20%) contrast(1.05);
+      transition: filter .4s;
+    }
+    .hero-photo-wrap:hover .hero-photo { filter: grayscale(0%) contrast(1.1); }
+    .hero-photo-label {
+      position: absolute; bottom: -1.5rem; left: 50%; transform: translateX(-50%);
+      font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--muted); white-space: nowrap;
+    }
+    @media (max-width: 860px) {
+      .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
+      .hero-content { align-items: center; }
+      .hero-photo-col { order: -1; }
+      .hero-photo-wrap { width: 220px; height: 270px; }
+      .hero-desc { max-width: 100%; }
     }
     .hero-bg {
       position: absolute; inset: 0; z-index: 0;
@@ -201,7 +259,27 @@
     /* ─── Summary / About ────────────────────────────────────────── */
     #about { padding: 120px 0; }
     .about-inner {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+      display: grid; grid-template-columns: auto 1fr 1fr; gap: 4rem; align-items: start;
+    }
+    .about-photo-col { display: flex; justify-content: center; }
+    .about-photo-wrap {
+      position: relative; width: 200px; flex-shrink: 0;
+    }
+    .about-photo {
+      width: 200px; height: 240px;
+      object-fit: cover; object-position: center top;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      filter: grayscale(30%);
+      transition: filter .4s, transform .4s;
+      display: block;
+    }
+    .about-photo-wrap:hover .about-photo { filter: grayscale(0%); transform: scale(1.03); }
+    .about-photo-badge {
+      position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%);
+      background: var(--accent); color: #fff;
+      font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+      padding: .3rem .8rem; border-radius: 980px; white-space: nowrap;
     }
     .about-text h2 {
       font-size: clamp(1.8rem, 3.5vw, 2.8rem);
@@ -210,6 +288,10 @@
     }
     .about-text p { font-size: 1rem; color: #a1a1a6; line-height: 1.75; margin-bottom: 1rem; }
     .about-highlights { display: flex; flex-direction: column; gap: 1.2rem; }
+    @media (max-width: 900px) {
+      .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-photo-col { display: none; }
+    }
     .highlight-card {
       padding: 1.4rem 1.6rem;
       background: var(--card); border: 1px solid var(--border);
@@ -387,7 +469,6 @@
     /* ─── Responsive ─────────────────────────────────────────────── */
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .about-inner { grid-template-columns: 1fr; gap: 3rem; }
       .projects-grid, .edu-grid { grid-template-columns: 1fr; }
       .hero-stats { gap: 1.8rem; }
       .timeline::before { left: 20px; }
@@ -426,28 +507,40 @@
     <div class="hero-bg"></div>
     <div class="hero-grid"></div>
 
-    <div class="hero-tag">Available for opportunities</div>
+    <div class="hero-inner">
+      <!-- Left: Text content -->
+      <div class="hero-content">
+        <div class="hero-tag">Available for opportunities</div>
+        <h1 class="hero-name">
+          <span class="gradient">Giridhar</span><br>
+          <span class="gradient">Kandala</span>
+        </h1>
+        <p class="hero-sub">Analytics Engineer &amp; Data Architect</p>
+        <p class="hero-desc">
+          Building scalable data pipelines, semantic models, and AI-integrated reporting systems
+          that turn raw data into actionable business intelligence.
+        </p>
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-num">5+</div><div class="stat-label">Years Exp.</div></div>
+          <div class="stat"><div class="stat-num">15+</div><div class="stat-label">Dashboards</div></div>
+          <div class="stat"><div class="stat-num">50%</div><div class="stat-label">Adoption ↑</div></div>
+          <div class="stat"><div class="stat-num">87%</div><div class="stat-label">Time Saved</div></div>
+        </div>
+        <div class="hero-actions">
+          <a href="#experience" class="btn-primary">View Work</a>
+          <a href="#contact" class="btn-secondary">Contact Me</a>
+        </div>
+      </div>
 
-    <h1 class="hero-name">
-      <span class="gradient">Giridhar</span><br>
-      <span class="gradient">Kandala</span>
-    </h1>
-    <p class="hero-sub">Analytics Engineer &amp; Data Architect</p>
-    <p class="hero-desc">
-      Building scalable data pipelines, semantic models, and AI-integrated reporting systems
-      that turn raw data into actionable business intelligence.
-    </p>
-
-    <div class="hero-stats">
-      <div class="stat"><div class="stat-num">5+</div><div class="stat-label">Years Exp.</div></div>
-      <div class="stat"><div class="stat-num">15+</div><div class="stat-label">Dashboards Built</div></div>
-      <div class="stat"><div class="stat-num">50%</div><div class="stat-label">Adoption Increase</div></div>
-      <div class="stat"><div class="stat-num">87%</div><div class="stat-label">Time Saved</div></div>
-    </div>
-
-    <div class="hero-actions">
-      <a href="#experience" class="btn-primary">View Work</a>
-      <a href="#contact" class="btn-secondary">Contact Me</a>
+      <!-- Right: Photo -->
+      <div class="hero-photo-col">
+        <div class="hero-photo-wrap">
+          <div class="hero-photo-glow"></div>
+          <div class="hero-photo-ring"></div>
+          <img src="GK.png" alt="Giridhar Reddy Kandala" class="hero-photo" />
+          <span class="hero-photo-label">Giridhar Reddy Kandala</span>
+        </div>
+      </div>
     </div>
 
     <div class="hero-scroll">
@@ -460,6 +553,14 @@
   <section id="about">
     <div class="container">
       <div class="about-inner">
+        <!-- Photo column -->
+        <div class="about-photo-col reveal">
+          <div class="about-photo-wrap">
+            <img src="GK.png" alt="Giridhar Reddy Kandala" class="about-photo" />
+            <span class="about-photo-badge">Analytics Engineer</span>
+          </div>
+        </div>
+
         <div class="about-text reveal">
           <p class="section-label">About Me</p>
           <h2>Where data meets <span style="color:var(--accent)">intelligence</span></h2>
