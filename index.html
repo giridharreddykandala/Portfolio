@@ -259,27 +259,7 @@
     /* ─── Summary / About ────────────────────────────────────────── */
     #about { padding: 120px 0; }
     .about-inner {
-      display: grid; grid-template-columns: auto 1fr 1fr; gap: 4rem; align-items: start;
-    }
-    .about-photo-col { display: flex; justify-content: center; }
-    .about-photo-wrap {
-      position: relative; width: 200px; flex-shrink: 0;
-    }
-    .about-photo {
-      width: 200px; height: 240px;
-      object-fit: cover; object-position: center top;
-      border-radius: 20px;
-      border: 1px solid var(--border);
-      filter: grayscale(30%);
-      transition: filter .4s, transform .4s;
-      display: block;
-    }
-    .about-photo-wrap:hover .about-photo { filter: grayscale(0%); transform: scale(1.03); }
-    .about-photo-badge {
-      position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%);
-      background: var(--accent); color: #fff;
-      font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
-      padding: .3rem .8rem; border-radius: 980px; white-space: nowrap;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
     }
     .about-text h2 {
       font-size: clamp(1.8rem, 3.5vw, 2.8rem);
@@ -290,7 +270,6 @@
     .about-highlights { display: flex; flex-direction: column; gap: 1.2rem; }
     @media (max-width: 900px) {
       .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-      .about-photo-col { display: none; }
     }
     .highlight-card {
       padding: 1.4rem 1.6rem;
@@ -459,6 +438,26 @@
     .contact-link:hover { border-color: var(--accent); background: rgba(41,151,255,.08); transform: translateY(-3px); }
     .contact-link svg { width: 18px; height: 18px; fill: currentColor; }
 
+    /* ─── Resume FAB ─────────────────────────────────────────────── */
+    .resume-fab {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+      display: flex; align-items: center; gap: .6rem;
+      padding: .75rem .95rem;
+      background: var(--accent);
+      color: #fff; font-size: .85rem; font-weight: 600;
+      border-radius: 980px; text-decoration: none;
+      box-shadow: 0 8px 32px rgba(41,151,255,.45);
+      transition: background .2s, transform .2s, box-shadow .2s, padding .3s, gap .3s;
+      overflow: hidden; white-space: nowrap;
+    }
+    .resume-fab:hover {
+      background: #0a84ff;
+      transform: translateY(-3px);
+      box-shadow: 0 14px 40px rgba(41,151,255,.6);
+    }
+    .resume-fab svg { width: 16px; height: 16px; fill: #fff; flex-shrink: 0; }
+    .resume-fab-label { transition: max-width .3s, opacity .3s; }
+
     /* ─── Footer ─────────────────────────────────────────────────── */
     footer {
       padding: 2rem; text-align: center;
@@ -553,14 +552,6 @@
   <section id="about">
     <div class="container">
       <div class="about-inner">
-        <!-- Photo column -->
-        <div class="about-photo-col reveal">
-          <div class="about-photo-wrap">
-            <img src="GK.png" alt="Giridhar Reddy Kandala" class="about-photo" />
-            <span class="about-photo-badge">Analytics Engineer</span>
-          </div>
-        </div>
-
         <div class="about-text reveal">
           <p class="section-label">About Me</p>
           <h2>Where data meets <span style="color:var(--accent)">intelligence</span></h2>
@@ -870,6 +861,12 @@
       </div>
     </div>
   </section>
+
+  <!-- Resume Download FAB -->
+  <a href="Giridhar Reddy Kandala Resume.pdf" download class="resume-fab" title="Download Resume">
+    <svg viewBox="0 0 24 24"><path d="M12 16l-5-5 1.41-1.41L11 13.17V4h2v9.17l2.59-2.58L17 11l-5 5zm-7 2h14v2H5v-2z"/></svg>
+    <span class="resume-fab-label">Download Resume</span>
+  </a>
 
   <footer>
     <p>© 2025 Giridhar Reddy Kandala · Built with passion for data &amp; design.</p>
